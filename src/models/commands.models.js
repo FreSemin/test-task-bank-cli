@@ -2,7 +2,7 @@ export const commands = {
   bank: {
     command: 'bank',
     description: 'Perform operations on Bank',
-    example: 'bank <operation_name> <operation_arguments>',
+    example: 'bank <operation_name> <operation_argument_1> <operation_argument_2>',
     availableOperations: {
       info: {
         name: 'info',
