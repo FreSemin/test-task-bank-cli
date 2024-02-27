@@ -1,7 +1,7 @@
-import { NOT_EXISTING_OPERATION_ERROR } from '../constants/index.js';
+import { BANK_WAS_NOT_FOUND, NOT_EXISTING_OPERATION_ERROR } from '../constants/index.js';
 import { BankEntity } from '../entities/index.js';
 import { commands } from '../models/index.js';
-import { logBanksInfo } from '../utils/index.js';
+import { logBanksInfo, validateNumber } from '../utils/index.js';
 
 export class BankService {
   #bankAvailableOperations = null;
@@ -17,7 +17,15 @@ export class BankService {
     if (infoArgument === this.#bankAvailableOperations.info.arguments.all.name) {
       logBanksInfo(await this.#bankEntity.findAll());
     } else {
-      console.log('get one');
+      const bankId = validateNumber(infoArgument);
+
+      const bank = await this.#bankEntity.findOneById(bankId) || null;
+
+      if (bank) {
+        logBanksInfo([bank]);
+      } else {
+        console.log(BANK_WAS_NOT_FOUND(bankId));
+      }
     }
   }
 
