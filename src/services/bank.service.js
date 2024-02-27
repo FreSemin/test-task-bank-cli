@@ -35,6 +35,20 @@ export class BankService {
     }
   }
 
+  async #onReg(operationArguments) {
+    const bankName = validateString(operationArguments[0], PROPERTIES.name);
+
+    const existingBank = await this.#bankEntity.findOneBy(PROPERTIES.name, bankName);
+
+    if (existingBank) {
+      throw new Error(ENTITY_WITH_PROPERTY_EXISTS(ENTITIES.bank, PROPERTIES.name, bankName));
+    }
+
+    const bank = await this.#bankEntity.create({ name: operationArguments[0] });
+
+    logBanksInfo([bank]);
+  }
+
   async handleOperation(lineArguments) {
     const [operation, ...operationArguments] = lineArguments;
 
@@ -44,6 +58,10 @@ export class BankService {
         break;
       }
 
+      case commands.bank.availableOperations.reg.name: {
+        await this.#onReg(operationArguments);
+        break;
+      }
 
       default: {
         throw new Error(NOT_EXISTING_OPERATION_ERROR(operation, commands.bank.command));
