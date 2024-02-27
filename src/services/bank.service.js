@@ -1,25 +1,30 @@
 import { NOT_EXISTING_OPERATION_ERROR } from '../constants/index.js';
+import { BankEntity } from '../entities/index.js';
 import { commands } from '../models/index.js';
+import { logBanksInfo } from '../utils/index.js';
 
 export class BankService {
   #bankAvailableOperations = null;
+  #bankEntity = null;
 
   constructor() {
     this.#bankAvailableOperations = commands.bank.availableOperations;
+
+    this.#bankEntity = new BankEntity();
   }
 
-  #onGetInfo(infoArgument) {
+  async #onGetInfo(infoArgument) {
     if (infoArgument === this.#bankAvailableOperations.info.arguments.all.name) {
-      console.log('get all');
+      logBanksInfo(await this.#bankEntity.findAll());
     } else {
       console.log('get one');
     }
   }
 
-  handleOperation(lineArguments) {
+  async handleOperation(lineArguments) {
     switch (lineArguments[0]) {
       case commands.bank.availableOperations.info.name: {
-        this.#onGetInfo(lineArguments[1]);
+        await this.#onGetInfo(lineArguments[1]);
         break;
       }
 
