@@ -16,7 +16,7 @@ export class CLI {
     this.#start();
   }
 
-  #onLine(line) {
+  async #onLine(line) {
     try {
       const isCloseCmd = this.#commandsService.isCloseCmd(line);
 
@@ -24,7 +24,7 @@ export class CLI {
         this.#readLine.close();
       }
 
-      this.#commandsService.handleCmd(line);
+      await this.#commandsService.handleCmd(line);
 
       this.#readLine.prompt();
     } catch (error) {

@@ -21,7 +21,7 @@ export class CommandsService {
     logCommandsInfo(allCommands);
   }
 
-  handleCmd(line) {
+  async handleCmd(line) {
     const [userCmd, ...lineArguments] = line.trim().split(' ');
 
     switch (userCmd) {
@@ -31,7 +31,7 @@ export class CommandsService {
       }
 
       case commands.bank.command: {
-        this.#bankService.handleOperation(lineArguments);
+        await this.#bankService.handleOperation(lineArguments);
         break;
       }
 
