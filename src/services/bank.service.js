@@ -1,7 +1,7 @@
 import {
-  BANK_WAS_NOT_FOUND,
   ENTITIES,
   ENTITY_WITH_PROPERTY_EXISTS,
+  ENTITY_WITH_PROPERTY_NOT_EXISTS,
   NOT_EXISTING_OPERATION_ERROR,
   PROPERTIES
 } from '../constants/index.js';
@@ -30,7 +30,7 @@ export class BankService {
       if (bank) {
         logBanksInfo([bank]);
       } else {
-        console.log(BANK_WAS_NOT_FOUND(bankId));
+        throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.bank, PROPERTIES.id, bankId));
       }
     }
   }
