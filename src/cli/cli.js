@@ -1,7 +1,7 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { CommandsService } from '../services/index.js';
-import { EXIT_USER_TEXT, LIST_ALL_COMMANDS_TEXT, WELCOME_USER_TEXT } from '../constants/index.js';
+import { EXIT_USER_TEXT, LIST_ALL_COMMANDS_TEXT, TEXT_ERROR, WELCOME_USER_TEXT } from '../constants/index.js';
 
 export class CLI {
   #readLine = null;
@@ -17,15 +17,21 @@ export class CLI {
   }
 
   #onLine(line) {
-    const isCloseCmd = this.#commandsService.isCloseCmd(line);
+    try {
+      const isCloseCmd = this.#commandsService.isCloseCmd(line);
 
-    if (isCloseCmd) {
-      this.#readLine.close();
+      if (isCloseCmd) {
+        this.#readLine.close();
+      }
+
+      this.#commandsService.handleCmd(line);
+
+      this.#readLine.prompt();
+    } catch (error) {
+      console.log(TEXT_ERROR, error.message);
+
+      this.#readLine.prompt();
     }
-
-    this.#commandsService.handleCmd(line);
-
-    this.#readLine.prompt();
   }
 
   #onClose() {
