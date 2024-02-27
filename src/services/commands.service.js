@@ -1,3 +1,4 @@
+import { COMMAND_DESCRIPTION_LOG, COMMAND_EXAMPLE_LOG, COMMAND_LOG } from '../constants/index.js';
 import { commands } from '../models/index.js';
 
 export class CommandsService {
@@ -6,6 +7,18 @@ export class CommandsService {
 
   isCloseCmd(line) {
     return line === commands.exit.command ? true : false;
+  }
+
+  logAllCmds() {
+    const allCommands = Object.values(commands);
+
+    allCommands.forEach((command) => {
+      console.group(command.command);
+      console.log(COMMAND_LOG, command.command);
+      console.log(COMMAND_DESCRIPTION_LOG, command.description);
+      console.log(COMMAND_EXAMPLE_LOG, command.example);
+      console.groupEnd();
+    });
   }
 
   handleCmd(line) {
