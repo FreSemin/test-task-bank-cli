@@ -3,24 +3,24 @@ export const commands = {
     command: 'bank',
     description: 'Perform operations on Bank',
     example: 'bank <operation_name> <operation_arguments>',
-    availableOperations: [
-      {
+    availableOperations: {
+      info: {
         name: 'info',
         description: 'Log information about banks',
-        arguments: [
-          {
+        arguments: {
+          all: {
             name: 'all',
             description: 'Log information about all banks!',
             example: 'bank info all',
           },
-          {
-            name: '<bank_id>',
+          byId: {
+            name: 'byId',
             description: 'Log information about one Bank by id!',
-            example: 'bank info 13',
+            example: 'bank info <bank_id>',
           }
-        ]
+        }
       }
-    ],
+    }
   },
   list: {
     command: 'list',
