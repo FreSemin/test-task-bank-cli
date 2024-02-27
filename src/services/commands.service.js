@@ -1,8 +1,15 @@
 import { NOT_EXISTING_COMMAND_ERROR } from '../constants/index.js';
 import { commands } from '../models/index.js';
 import { logCommandsInfo } from '../utils/index.js';
+import { BankService } from './index.js';
 
 export class CommandsService {
+
+  #bankService = null;
+
+  constructor() {
+    this.#bankService = new BankService();
+  }
 
   isCloseCmd(line) {
     return line === commands.exit.command ? true : false;
@@ -15,13 +22,16 @@ export class CommandsService {
   }
 
   handleCmd(line) {
-    const lineArguments = line.trim().split(' ');
-
-    const userCmd = lineArguments[0];
+    const [userCmd, lineArguments] = line.trim().split(' ');
 
     switch (userCmd) {
       case commands.list.command: {
         this.logAllCommands();
+        break;
+      }
+
+      case commands.bank.command: {
+        this.#bankService.handleOperation(lineArguments);
         break;
       }
 
