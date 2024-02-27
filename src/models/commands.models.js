@@ -55,6 +55,29 @@ export const commands = {
       }
     }
   },
+  client: {
+    command: 'client',
+    description: 'Perform operations on Client',
+    example: 'client <operation_name> <operation_argument_1> <operation_argument_2>',
+    availableOperations: {
+      info: {
+        name: 'info',
+        description: 'Log information about clients',
+        arguments: {
+          all: {
+            name: 'all',
+            description: 'Log information about all clients!',
+            example: 'client info all',
+          },
+          byId: {
+            name: 'byId',
+            description: 'Log information about one Client by id!',
+            example: 'client info <client_id>',
+          }
+        }
+      },
+    }
+  },
   list: {
     command: 'list',
     description: 'Log list of all available CLI commands!',
