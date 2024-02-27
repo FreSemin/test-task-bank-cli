@@ -1,10 +1,10 @@
 import { ARGUMENT_NOT_VALID_FORMAT } from '../constants/index.js';
 
-export const validateNumber = (toNumber) => {
+export const validateNumber = (toNumber, propertyName) => {
   const num = Number(toNumber);
 
   if (isNaN(num)) {
-    throw new Error(ARGUMENT_NOT_VALID_FORMAT(toNumber));
+    throw new Error(ARGUMENT_NOT_VALID_FORMAT(toNumber, propertyName));
   }
 
   return num;
