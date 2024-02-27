@@ -1,3 +1,3 @@
-import { CLI } from './src/cli/cli.js';
+import { CLIManager } from './src/cli/cli-manager.js';
 
-new CLI();
+new CLIManager();

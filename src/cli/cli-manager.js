@@ -9,7 +9,7 @@ import {
   WELCOME_USER_TEXT
 } from '../constants/index.js';
 
-export class CLI {
+export class CLIManager {
   #readLine = null;
 
   #commandsService = null;
