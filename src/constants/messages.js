@@ -6,3 +6,4 @@ export const ENTER_COMMAND_TEXT = 'Enter your command.';
 export const EXIT_USER_TEXT = 'Thank yor for using BANK CLI, goodbye!';
 
 export const NO_BANKS_TEXT = 'No any banks!';
+export const BANK_WAS_NOT_FOUND = (bankId) => `Bank with id: ${bankId} was not found!`;
