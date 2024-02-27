@@ -1,7 +1,13 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { CommandsService } from '../services/index.js';
-import { EXIT_USER_TEXT, LIST_ALL_COMMANDS_TEXT, TEXT_ERROR, WELCOME_USER_TEXT } from '../constants/index.js';
+import {
+  ENTER_COMMAND_TEXT,
+  EXIT_USER_TEXT,
+  LIST_ALL_COMMANDS_TEXT,
+  TEXT_ERROR,
+  WELCOME_USER_TEXT
+} from '../constants/index.js';
 
 export class CLI {
   #readLine = null;
@@ -16,6 +22,12 @@ export class CLI {
     this.#start();
   }
 
+  #promptUserForInput() {
+    console.log(ENTER_COMMAND_TEXT);
+
+    this.#readLine.prompt();
+  }
+
   async #onLine(line) {
     try {
       const isCloseCmd = this.#commandsService.isCloseCmd(line);
@@ -26,11 +38,11 @@ export class CLI {
 
       await this.#commandsService.handleCmd(line);
 
-      this.#readLine.prompt();
+      this.#promptUserForInput();
     } catch (error) {
       console.log(TEXT_ERROR, error.message);
 
-      this.#readLine.prompt();
+      this.#promptUserForInput();
     }
   }
 
@@ -56,6 +68,6 @@ export class CLI {
   #start() {
     this.#welcomeUser();
 
-    this.#readLine.prompt();
+    this.#promptUserForInput();
   }
 }
