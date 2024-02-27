@@ -14,6 +14,15 @@ export class BankEntity {
     });
   }
 
+  async update(bankId, bankData) {
+    return await this.#prismaClient.bank.update({
+      where: {
+        id: bankId
+      },
+      data: bankData
+    });
+  }
+
   async findAll() {
     return await this.#prismaClient.bank.findMany();
   }
