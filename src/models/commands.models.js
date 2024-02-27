@@ -30,6 +30,17 @@ export const commands = {
             example: 'bank new <bank_name>',
           }
         }
+      },
+      update: {
+        name: 'update',
+        description: 'Update data of the existing bank by id',
+        arguments: {
+          entityData: {
+            name: 'entity data',
+            description: 'Update data of the existing bank by id',
+            example: 'bank update <bank_id> <bank_name>',
+          }
+        }
       }
     }
   },

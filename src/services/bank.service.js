@@ -49,6 +49,28 @@ export class BankService {
     logBanksInfo([bank]);
   }
 
+  async #onUpdate(operationArguments) {
+    const bankId = validateNumber(operationArguments[0], PROPERTIES.id);
+
+    const bankName = validateString(operationArguments[1], PROPERTIES.name);
+
+    const existingBank = await this.#bankEntity.findOneBy(PROPERTIES.id, bankId);
+
+    const existingBankName = await this.#bankEntity.findOneBy(PROPERTIES.name, bankName);
+
+    if (!existingBank) {
+      throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.bank, PROPERTIES.id, bankId));
+    }
+
+    if (existingBankName) {
+      throw new Error(ENTITY_WITH_PROPERTY_EXISTS(ENTITIES.bank, PROPERTIES.name, bankName));
+    }
+
+    const updatedBank = await this.#bankEntity.update(bankId, { name: bankName });
+
+    logBanksInfo([updatedBank]);
+  }
+
   async handleOperation(lineArguments) {
     const [operation, ...operationArguments] = lineArguments;
 
@@ -60,6 +82,11 @@ export class BankService {
 
       case commands.bank.availableOperations.reg.name: {
         await this.#onReg(operationArguments);
+        break;
+      }
+
+      case commands.bank.availableOperations.update.name: {
+        await this.#onUpdate(operationArguments);
         break;
       }
 
