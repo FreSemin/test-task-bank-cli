@@ -1,4 +1,4 @@
-import { COMMAND_DESCRIPTION_LOG, COMMAND_EXAMPLE_LOG, COMMAND_LOG } from '../constants/index.js';
+import { COMMAND_DESCRIPTION_LOG, COMMAND_EXAMPLE_LOG, COMMAND_LOG, NOT_EXISTING_COMMAND_ERROR } from '../constants/index.js';
 import { commands } from '../models/index.js';
 
 export class CommandsService {
@@ -33,8 +33,7 @@ export class CommandsService {
       }
 
       default: {
-        // TODO: throw error message
-        break;
+        throw new Error(NOT_EXISTING_COMMAND_ERROR(userCmd));
       }
     }
   }
