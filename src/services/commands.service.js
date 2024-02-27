@@ -22,7 +22,7 @@ export class CommandsService {
   }
 
   handleCmd(line) {
-    const [userCmd, lineArguments] = line.trim().split(' ');
+    const [userCmd, ...lineArguments] = line.trim().split(' ');
 
     switch (userCmd) {
       case commands.list.command: {
