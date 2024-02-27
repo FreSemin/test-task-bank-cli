@@ -19,6 +19,17 @@ export const commands = {
             example: 'bank info <bank_id>',
           }
         }
+      },
+      reg: {
+        name: 'reg',
+        description: 'Registering new bank in application',
+        arguments: {
+          entityData: {
+            name: 'entity data',
+            description: 'Register new bank in application!',
+            example: 'bank new <bank_name>',
+          }
+        }
       }
     }
   },
