@@ -1,5 +1,6 @@
 import {
   ENTITIES,
+  ENTITY_WAS_DELETED,
   ENTITY_WITH_PROPERTY_EXISTS,
   ENTITY_WITH_PROPERTY_NOT_EXISTS,
   NOT_EXISTING_OPERATION_ERROR,
@@ -71,6 +72,22 @@ export class BankService {
     logBanksInfo([updatedBank]);
   }
 
+  async #onDelete(operationArguments) {
+    const bankId = validateNumber(operationArguments[0], PROPERTIES.id);
+
+    const existingBank = await this.#bankEntity.findOneBy(PROPERTIES.id, bankId);
+
+    if (!existingBank) {
+      throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.bank, PROPERTIES.id, bankId));
+    }
+
+    const deletedEntity = await this.#bankEntity.delete(bankId);
+
+    if (deletedEntity) {
+      console.log(ENTITY_WAS_DELETED(ENTITIES.bank, PROPERTIES.id, bankId));
+    }
+  }
+
   async handleOperation(lineArguments) {
     const [operation, ...operationArguments] = lineArguments;
 
@@ -87,6 +104,11 @@ export class BankService {
 
       case commands.bank.availableOperations.update.name: {
         await this.#onUpdate(operationArguments);
+        break;
+      }
+
+      case commands.bank.availableOperations.delete.name: {
+        await this.#onDelete(operationArguments);
         break;
       }
 

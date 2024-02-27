@@ -41,6 +41,17 @@ export const commands = {
             example: 'bank update <bank_id> <bank_name>',
           }
         }
+      },
+      delete: {
+        name: 'delete',
+        description: 'Delete existing bank by id',
+        arguments: {
+          id: {
+            name: 'id',
+            description: 'Delete existing bank by id',
+            example: 'bank delete <bank_id>',
+          }
+        }
       }
     }
   },
