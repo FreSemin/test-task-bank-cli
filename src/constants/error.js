@@ -7,3 +7,6 @@ export const ARGUMENT_NOT_VALID_FORMAT = (argument, argumentName) => `Argument: 
 
 export const ENTITY_WITH_PROPERTY_EXISTS = (entityName, propertyName, propertyValue) =>
   `Entity ${entityName} with ${propertyName} = ${propertyValue} already exists!`;
+
+export const ENTITY_WITH_PROPERTY_NOT_EXISTS = (entityName, propertyName, propertyValue) =>
+  `Entity ${entityName} with ${propertyName} = ${propertyValue} not exists!`;
