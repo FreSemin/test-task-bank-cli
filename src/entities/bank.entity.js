@@ -8,6 +8,12 @@ export class BankEntity {
     this.#prismaClient = prismaClientService.prismaClient;
   }
 
+  async create(newBank) {
+    return await this.#prismaClient.bank.create({
+      data: newBank
+    });
+  }
+
   async findAll() {
     return await this.#prismaClient.bank.findMany();
   }
