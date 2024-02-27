@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/FreSemin/test-task-bank-cli/issues"
   },
-  "homepage": "https://github.com/FreSemin/test-task-bank-cli#readme"
+  "homepage": "https://github.com/FreSemin/test-task-bank-cli#readme",
+  "devDependencies": {
+    "prisma": "^5.10.2"
+  }
 }
