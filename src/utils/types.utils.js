@@ -9,3 +9,11 @@ export const validateNumber = (toNumber) => {
 
   return num;
 };
+
+export const validateString = (string, propertyName) => {
+  if (!string) {
+    throw new Error(ARGUMENT_NOT_VALID_FORMAT(string, propertyName));
+  }
+
+  return string.trim();
+};
