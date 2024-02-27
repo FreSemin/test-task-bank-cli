@@ -34,4 +34,12 @@ export class BankEntity {
       }
     });
   }
+
+  async delete(bankId) {
+    return await this.#prismaClient.bank.delete({
+      where: {
+        id: bankId,
+      }
+    });
+  }
 }
