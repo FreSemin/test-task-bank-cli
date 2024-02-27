@@ -7,7 +7,18 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
+enum ClientType {
+  INDIVIDUAL
+  LEGAL_ENTITY
+}
+
 model Bank {
   id   Int    @id @default(autoincrement())
   name String @unique
+}
+
+model Client {
+  id   Int        @id @default(autoincrement())
+  name String
+  type ClientType @default(INDIVIDUAL)
 }
