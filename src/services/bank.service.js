@@ -1,7 +1,13 @@
-import { BANK_WAS_NOT_FOUND, NOT_EXISTING_OPERATION_ERROR } from '../constants/index.js';
+import {
+  BANK_WAS_NOT_FOUND,
+  ENTITIES,
+  ENTITY_WITH_PROPERTY_EXISTS,
+  NOT_EXISTING_OPERATION_ERROR,
+  PROPERTIES
+} from '../constants/index.js';
 import { BankEntity } from '../entities/index.js';
 import { commands } from '../models/index.js';
-import { logBanksInfo, validateNumber } from '../utils/index.js';
+import { logBanksInfo, validateNumber, validateString } from '../utils/index.js';
 
 export class BankService {
   #bankAvailableOperations = null;
@@ -17,7 +23,7 @@ export class BankService {
     if (infoArgument === this.#bankAvailableOperations.info.arguments.all.name) {
       logBanksInfo(await this.#bankEntity.findAll());
     } else {
-      const bankId = validateNumber(infoArgument);
+      const bankId = validateNumber(infoArgument, PROPERTIES.id);
 
       const bank = await this.#bankEntity.findOneById(bankId) || null;
 
@@ -30,15 +36,17 @@ export class BankService {
   }
 
   async handleOperation(lineArguments) {
-    switch (lineArguments[0]) {
+    const [operation, ...operationArguments] = lineArguments;
+
+    switch (operation) {
       case commands.bank.availableOperations.info.name: {
-        await this.#onGetInfo(lineArguments[1]);
+        await this.#onGetInfo(operationArguments[0]);
         break;
       }
 
 
       default: {
-        throw new Error(NOT_EXISTING_OPERATION_ERROR(lineArguments[0], commands.bank.command));
+        throw new Error(NOT_EXISTING_OPERATION_ERROR(operation, commands.bank.command));
       }
     }
   }
