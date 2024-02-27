@@ -3,7 +3,7 @@ import { stdin as input, stdout as output } from 'node:process';
 import { CommandsService } from '../services/index.js';
 import { EXIT_USER_TEXT, LIST_ALL_COMMANDS_TEXT, WELCOME_USER_TEXT } from '../constants/index.js';
 
-export default class CLI {
+export class CLI {
   #readLine = null;
 
   #commandsService = null;

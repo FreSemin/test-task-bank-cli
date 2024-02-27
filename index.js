@@ -1,3 +1,3 @@
-import CLI from './src/cli/cli.js';
+import { CLI } from './src/cli/cli.js';
 
 new CLI();
