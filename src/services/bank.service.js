@@ -25,7 +25,7 @@ export class BankService {
     } else {
       const bankId = validateNumber(infoArgument, PROPERTIES.id);
 
-      const bank = await this.#bankEntity.findOneById(bankId) || null;
+      const bank = await this.#bankEntity.findOneBy(PROPERTIES.id, bankId);
 
       if (bank) {
         logBanksInfo([bank]);

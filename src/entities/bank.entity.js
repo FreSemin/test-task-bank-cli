@@ -18,10 +18,10 @@ export class BankEntity {
     return await this.#prismaClient.bank.findMany();
   }
 
-  async findOneById(bankId) {
+  async findOneBy(propertyName, bankId) {
     return await this.#prismaClient.bank.findUnique({
       where: {
-        id: bankId,
+        [propertyName]: bankId,
       }
     });
   }
