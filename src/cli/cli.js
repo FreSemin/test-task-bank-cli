@@ -1,6 +1,7 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { CommandsService } from '../services/index.js';
+import { LIST_ALL_COMMANDS_TEXT, WELCOME_USER_TEXT } from '../constants/index.js';
 
 export default class CLI {
   #readLine = null;
@@ -19,7 +20,12 @@ export default class CLI {
     this.#readLine = readline.createInterface({ input, output });
   }
 
+  #welcomeUser() {
+    console.log(WELCOME_USER_TEXT);
+    console.log(LIST_ALL_COMMANDS_TEXT);
+  }
+
   #start() {
-    console.log('CLI started!');
+    this.#welcomeUser();
   }
 }
