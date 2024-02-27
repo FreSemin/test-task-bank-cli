@@ -1,4 +1,8 @@
 export const COMMAND_LOG = 'Command: ';
-export const COMMAND_DESCRIPTION_LOG = 'Description: ';
 
-export const COMMAND_EXAMPLE_LOG = 'Command use example: ';
+export const DESCRIPTION_LOG = 'Description: ';
+export const EXAMPLE_LOG = 'Example: ';
+
+export const COMMAND_OPERATION_LOG = 'Operation: ';
+
+export const COMMAND_ARGUMENT_LOG = 'Argument: ';
