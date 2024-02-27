@@ -22,6 +22,20 @@ export class CommandsService {
   }
 
   handleCmd(line) {
-    console.log(line);
+    const lineArguments = line.trim().split(' ');
+
+    const userCmd = lineArguments[0];
+
+    switch (userCmd) {
+      case commands.list.command: {
+        this.logAllCmds();
+        break;
+      }
+
+      default: {
+        // TODO: throw error message
+        break;
+      }
+    }
   }
 }

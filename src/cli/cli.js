@@ -22,6 +22,10 @@ export default class CLI {
     if (isCloseCmd) {
       this.#readLine.close();
     }
+
+    this.#commandsService.handleCmd(line);
+
+    this.#readLine.prompt();
   }
 
   #onClose() {
