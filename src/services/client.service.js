@@ -30,6 +30,24 @@ export class ClientService {
     logInfo([client]);
   }
 
+  async #onUpdate(operationArguments) {
+    const clientId = validateNumber(operationArguments[0], PROPERTIES.id);
+
+    const clientName = validateString(operationArguments[1], PROPERTIES.name);
+
+    const clientType = validateClientType(operationArguments[2]);
+
+    const existingClient = await this.#clientEntity.findOneBy(PROPERTIES.id, clientId);
+
+    if (!existingClient) {
+      throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.client, PROPERTIES.id, clientId));
+    }
+
+    const updatedClient = await this.#clientEntity.update(clientId, { name: clientName, type: clientType });
+
+    logInfo([updatedClient]);
+  }
+
   async #onGetInfo(infoArgument) {
     if (infoArgument === this.#clientAvailableOperations.info.arguments.all.name) {
       logInfo(await this.#clientEntity.findAll());
@@ -58,6 +76,11 @@ export class ClientService {
 
       case commands.bank.availableOperations.reg.name: {
         await this.#onReg(operationArguments);
+        break;
+      }
+
+      case commands.bank.availableOperations.update.name: {
+        await this.#onUpdate(operationArguments);
         break;
       }
 

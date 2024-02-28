@@ -87,6 +87,17 @@ export const commands = {
           }
         }
       },
+      update: {
+        name: 'update',
+        description: 'Update data of the existing client by id',
+        arguments: {
+          entityData: {
+            name: 'entity data',
+            description: 'Update data of the existing client by id',
+            example: 'client update <client_id> <client_name> <client_type>',
+          }
+        }
+      },
     }
   },
   list: {
