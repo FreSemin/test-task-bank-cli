@@ -6,18 +6,23 @@ import {
   NOT_EXISTING_OPERATION_ERROR,
   PROPERTIES
 } from '../constants/index.js';
-import { BankEntity } from '../entities/index.js';
+import { AccountEntity, BankEntity, ClientEntity } from '../entities/index.js';
 import { commands } from '../models/index.js';
 import { logInfo, validateNumber, validateString } from '../utils/index.js';
 
 export class BankService {
   #bankAvailableOperations = null;
   #bankEntity = null;
+  #clientEntity = null;
+  #accountEntity = null;
 
   constructor() {
     this.#bankAvailableOperations = commands.bank.availableOperations;
 
     this.#bankEntity = new BankEntity();
+    this.#clientEntity = new ClientEntity();
+    this.#accountEntity = new AccountEntity();
+
   }
 
   async #onGetInfo(infoArgument) {
@@ -88,6 +93,32 @@ export class BankService {
     }
   }
 
+  async #onAddClient(operationArguments) {
+    const clientId = validateNumber(operationArguments[0], PROPERTIES.id);
+
+    const existingClient = await this.#clientEntity.findOneBy(PROPERTIES.id, clientId);
+
+    if (!existingClient) {
+      throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.client, PROPERTIES.id, clientId));
+    }
+
+    const bankId = validateNumber(operationArguments[1], PROPERTIES.id);
+
+    const existingBank = await this.#bankEntity.findOneBy(PROPERTIES.id, bankId);
+
+    if (!existingBank) {
+      throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.bank, PROPERTIES.id, bankId));
+    }
+
+    const newAccount = await this.#accountEntity.create({
+      balance: 0,
+      clientId,
+      bankId
+    });
+
+    logInfo([newAccount]);
+  }
+
   async handleOperation(lineArguments) {
     const [operation, ...operationArguments] = lineArguments;
 
@@ -109,6 +140,11 @@ export class BankService {
 
       case this.#bankAvailableOperations.delete.name: {
         await this.#onDelete(operationArguments);
+        break;
+      }
+
+      case this.#bankAvailableOperations.addClient.name: {
+        await this.#onAddClient(operationArguments);
         break;
       }
 

@@ -52,6 +52,17 @@ export const commands = {
             example: 'bank delete <bank_id>',
           }
         }
+      },
+      addClient: {
+        name: 'add-client',
+        description: 'Adding client to bank and open new account',
+        arguments: {
+          entityData: {
+            name: 'entity data',
+            description: 'Adding client to bank and open new account!',
+            example: 'bank add-client <client_id> <bank_id>',
+          }
+        }
       }
     }
   },
