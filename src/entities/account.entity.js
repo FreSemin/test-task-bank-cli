@@ -27,6 +27,14 @@ export class AccountEntity {
     return await this.#prismaClient.account.findMany();
   }
 
+  async findManyByClientId(clientId) {
+    return await this.#prismaClient.account.findMany({
+      where: {
+        clientId
+      }
+    });
+  }
+
   async findOneBy(propertyName, uniqId) {
     return await this.#prismaClient.account.findUnique({
       where: {
