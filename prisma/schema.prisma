@@ -26,10 +26,22 @@ model Client {
 }
 
 model Account {
-  id       Int    @id @default(autoincrement())
-  balance  Float
-  clientId Int
-  client   Client @relation(fields: [clientId], references: [id])
-  bankId   Int
-  bank     Bank   @relation(fields: [bankId], references: [id])
+  id                   Int           @id @default(autoincrement())
+  balance              Float
+  clientId             Int
+  client               Client        @relation(fields: [clientId], references: [id])
+  bankId               Int
+  bank                 Bank          @relation(fields: [bankId], references: [id])
+  outgoingTransactions Transaction[] @relation("From")
+  incomingTransactions Transaction[] @relation("To")
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  fromId    Int
+  from      Account  @relation("From", fields: [fromId], references: [id])
+  toId      Int
+  to        Account  @relation("To", fields: [toId], references: [id])
+  createdAt DateTime @default(now())
 }
