@@ -14,3 +14,5 @@ export const ENTITY_WITH_PROPERTY_NOT_EXISTS = (entityName, propertyName, proper
 export const NOT_ENOUGH_MONEY = 'Not enough money for operation';
 
 export const NOT_VALID_NUMBER = 'Number should be greater than 0!';
+
+export const CANNOT_TRANSACTION_ACCOUNT = 'Cannot perform transaction to one account!';
