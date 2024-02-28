@@ -13,12 +13,23 @@ enum ClientType {
 }
 
 model Bank {
-  id   Int    @id @default(autoincrement())
-  name String @unique
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  Account Account[]
 }
 
 model Client {
-  id   Int        @id @default(autoincrement())
-  name String
-  type ClientType @default(INDIVIDUAL)
+  id      Int        @id @default(autoincrement())
+  name    String
+  type    ClientType @default(INDIVIDUAL)
+  Account Account[]
+}
+
+model Account {
+  id       Int    @id @default(autoincrement())
+  balance  Float
+  clientId Int
+  client   Client @relation(fields: [clientId], references: [id])
+  bankId   Int
+  bank     Bank   @relation(fields: [bankId], references: [id])
 }
