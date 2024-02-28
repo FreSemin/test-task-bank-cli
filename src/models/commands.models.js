@@ -27,7 +27,7 @@ export const commands = {
           entityData: {
             name: 'entity data',
             description: 'Register new bank in application!',
-            example: 'bank new <bank_name>',
+            example: 'bank reg <bank_name>',
           }
         }
       },
