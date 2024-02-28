@@ -110,8 +110,10 @@ export class BankService {
       throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.bank, PROPERTIES.id, bankId));
     }
 
+    const initialBalance = Number(operationArguments[2]) > 0 ? Number(operationArguments[2]) : 0;
+
     const newAccount = await this.#accountEntity.create({
-      balance: 0,
+      balance: initialBalance,
       clientId,
       bankId
     });

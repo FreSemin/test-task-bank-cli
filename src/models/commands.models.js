@@ -60,7 +60,7 @@ export const commands = {
           entityData: {
             name: 'entity data',
             description: 'Adding client to bank and open new account!',
-            example: 'bank add-client <client_id> <bank_id>',
+            example: 'bank add-client <client_id> <bank_id> <initial_balance>',
           }
         }
       }

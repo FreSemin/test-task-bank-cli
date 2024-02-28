@@ -6,4 +6,5 @@ export const ENTITIES = {
 export const PROPERTIES = {
   id: 'id',
   name: 'name',
+  balance: 'balance',
 };
