@@ -86,22 +86,22 @@ export class ClientService {
     const [operation, ...operationArguments] = lineArguments;
 
     switch (operation) {
-      case commands.client.availableOperations.info.name: {
+      case this.#clientAvailableOperations.info.name: {
         await this.#onGetInfo(operationArguments[0]);
         break;
       }
 
-      case commands.client.availableOperations.reg.name: {
+      case this.#clientAvailableOperations.reg.name: {
         await this.#onReg(operationArguments);
         break;
       }
 
-      case commands.client.availableOperations.update.name: {
+      case this.#clientAvailableOperations.update.name: {
         await this.#onUpdate(operationArguments);
         break;
       }
 
-      case commands.client.availableOperations.delete.name: {
+      case this.#clientAvailableOperations.delete.name: {
         await this.#onDelete(operationArguments);
         break;
       }
