@@ -1,7 +1,7 @@
 import { NOT_EXISTING_COMMAND_ERROR } from '../constants/index.js';
 import { commands } from '../models/index.js';
 import { logCommandsInfo } from '../utils/index.js';
-import { BankService, ClientService } from './index.js';
+import { BankService, ClientService, TransactionService } from './index.js';
 
 export class CommandsService {
 
@@ -9,9 +9,12 @@ export class CommandsService {
 
   #clientService = null;
 
+  #transactionService = null;
+
   constructor() {
     this.#bankService = new BankService();
     this.#clientService = new ClientService();
+    this.#transactionService = new TransactionService();
   }
 
   isCloseCmd(line) {
@@ -40,6 +43,11 @@ export class CommandsService {
 
       case commands.client.command: {
         await this.#clientService.handleOperation(lineArguments);
+        break;
+      }
+
+      case commands.transaction.command: {
+        await this.#transactionService.handleOperation(lineArguments);
         break;
       }
 
