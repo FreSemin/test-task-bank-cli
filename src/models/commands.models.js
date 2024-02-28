@@ -94,7 +94,7 @@ export const commands = {
           entityData: {
             name: 'entity data',
             description: 'Register new client in application! (Type can be INDIVIDUAL or LEGAL_ENTITY)',
-            example: 'client bank new <client_name> <client_type>',
+            example: 'client reg <client_name> <client_type>',
           }
         }
       },
