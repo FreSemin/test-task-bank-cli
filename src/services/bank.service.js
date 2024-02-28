@@ -45,7 +45,7 @@ export class BankService {
       throw new Error(ENTITY_WITH_PROPERTY_EXISTS(ENTITIES.bank, PROPERTIES.name, bankName));
     }
 
-    const bank = await this.#bankEntity.create({ name: operationArguments[0] });
+    const bank = await this.#bankEntity.create({ name: bankName });
 
     logInfo([bank]);
   }
