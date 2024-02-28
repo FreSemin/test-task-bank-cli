@@ -74,12 +74,12 @@ export class ClientService {
         break;
       }
 
-      case commands.bank.availableOperations.reg.name: {
+      case commands.client.availableOperations.reg.name: {
         await this.#onReg(operationArguments);
         break;
       }
 
-      case commands.bank.availableOperations.update.name: {
+      case commands.client.availableOperations.update.name: {
         await this.#onUpdate(operationArguments);
         break;
       }
