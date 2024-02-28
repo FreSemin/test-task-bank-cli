@@ -8,7 +8,7 @@ import {
 } from '../constants/index.js';
 import { BankEntity } from '../entities/index.js';
 import { commands } from '../models/index.js';
-import { logBanksInfo, validateNumber, validateString } from '../utils/index.js';
+import { logInfo, validateNumber, validateString } from '../utils/index.js';
 
 export class BankService {
   #bankAvailableOperations = null;
@@ -22,14 +22,14 @@ export class BankService {
 
   async #onGetInfo(infoArgument) {
     if (infoArgument === this.#bankAvailableOperations.info.arguments.all.name) {
-      logBanksInfo(await this.#bankEntity.findAll());
+      logInfo(await this.#bankEntity.findAll());
     } else {
       const bankId = validateNumber(infoArgument, PROPERTIES.id);
 
       const bank = await this.#bankEntity.findOneBy(PROPERTIES.id, bankId);
 
       if (bank) {
-        logBanksInfo([bank]);
+        logInfo([bank]);
       } else {
         throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.bank, PROPERTIES.id, bankId));
       }
@@ -47,7 +47,7 @@ export class BankService {
 
     const bank = await this.#bankEntity.create({ name: operationArguments[0] });
 
-    logBanksInfo([bank]);
+    logInfo([bank]);
   }
 
   async #onUpdate(operationArguments) {
@@ -69,7 +69,7 @@ export class BankService {
 
     const updatedBank = await this.#bankEntity.update(bankId, { name: bankName });
 
-    logBanksInfo([updatedBank]);
+    logInfo([updatedBank]);
   }
 
   async #onDelete(operationArguments) {
