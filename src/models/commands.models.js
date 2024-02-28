@@ -122,6 +122,24 @@ export const commands = {
       }
     }
   },
+  transaction: {
+    command: 'transaction',
+    description: 'Perform operation on Transactions',
+    example: 'transaction <operation_name> <operation_argument_1> <operation_argument_2>',
+    availableOperations: {
+      new: {
+        name: 'new',
+        description: 'Create new transaction',
+        arguments: {
+          data: {
+            name: 'data',
+            description: 'Create new transaction from account send to account',
+            example: 'transaction new <from_account_id> <to_account_id> <amount>',
+          }
+        }
+      }
+    }
+  },
   list: {
     command: 'list',
     description: 'Log list of all available CLI commands!',
