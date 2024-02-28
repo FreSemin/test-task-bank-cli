@@ -98,6 +98,17 @@ export const commands = {
           }
         }
       },
+      delete: {
+        name: 'delete',
+        description: 'Delete existing client by id',
+        arguments: {
+          id: {
+            name: 'id',
+            description: 'Delete existing client by id',
+            example: 'client delete <client_id>',
+          }
+        }
+      }
     }
   },
   list: {

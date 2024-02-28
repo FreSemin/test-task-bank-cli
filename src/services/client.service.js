@@ -1,5 +1,6 @@
 import {
   ENTITIES,
+  ENTITY_WAS_DELETED,
   ENTITY_WITH_PROPERTY_NOT_EXISTS,
   NOT_EXISTING_OPERATION_ERROR,
   PROPERTIES
@@ -48,6 +49,22 @@ export class ClientService {
     logInfo([updatedClient]);
   }
 
+  async #onDelete(operationArguments) {
+    const clientId = validateNumber(operationArguments[0], PROPERTIES.id);
+
+    const existingClient = await this.#clientEntity.findOneBy(PROPERTIES.id, clientId);
+
+    if (!existingClient) {
+      throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.client, PROPERTIES.id, clientId));
+    }
+
+    const deletedEntity = await this.#clientEntity.delete(clientId);
+
+    if (deletedEntity) {
+      console.log(ENTITY_WAS_DELETED(ENTITIES.client, PROPERTIES.id, clientId));
+    }
+  }
+
   async #onGetInfo(infoArgument) {
     if (infoArgument === this.#clientAvailableOperations.info.arguments.all.name) {
       logInfo(await this.#clientEntity.findAll());
@@ -81,6 +98,11 @@ export class ClientService {
 
       case commands.client.availableOperations.update.name: {
         await this.#onUpdate(operationArguments);
+        break;
+      }
+
+      case commands.client.availableOperations.delete.name: {
+        await this.#onDelete(operationArguments);
         break;
       }
 
