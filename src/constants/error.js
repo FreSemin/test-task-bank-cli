@@ -10,3 +10,6 @@ export const ENTITY_WITH_PROPERTY_EXISTS = (entityName, propertyName, propertyVa
 
 export const ENTITY_WITH_PROPERTY_NOT_EXISTS = (entityName, propertyName, propertyValue) =>
   `Entity ${entityName} with ${propertyName} = ${propertyValue} not exists!`;
+
+export const NOT_ENOUGH_MONEY = 'Not enough money for operation';
+
