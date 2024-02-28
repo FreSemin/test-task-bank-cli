@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+enum ClientType {
+  INDIVIDUAL
+  LEGAL_ENTITY
+}
+
+model Bank {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  Account Account[]
+}
+
+model Client {
+  id      Int        @id @default(autoincrement())
+  name    String
+  type    ClientType @default(INDIVIDUAL)
+  Account Account[]
+}
+
+model Account {
+  id                   Int           @id @default(autoincrement())
+  balance              Float
+  clientId             Int
+  client               Client        @relation(fields: [clientId], references: [id])
+  bankId               Int
+  bank                 Bank          @relation(fields: [bankId], references: [id])
+  outgoingTransactions Transaction[] @relation("From")
+  incomingTransactions Transaction[] @relation("To")
+}
+
+model Transaction {
+  id        Int     @id @default(autoincrement())
+  amount    Float
+  fromId    Int
+  from      Account @relation("From", fields: [fromId], references: [id])
+  toId      Int
+  to        Account @relation("To", fields: [toId], references: [id])
+  createdAt BigInt
+}
