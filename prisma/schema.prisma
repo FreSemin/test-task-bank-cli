@@ -37,11 +37,11 @@ model Account {
 }
 
 model Transaction {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   amount    Float
   fromId    Int
-  from      Account  @relation("From", fields: [fromId], references: [id])
+  from      Account @relation("From", fields: [fromId], references: [id])
   toId      Int
-  to        Account  @relation("To", fields: [toId], references: [id])
-  createdAt DateTime @default(now())
+  to        Account @relation("To", fields: [toId], references: [id])
+  createdAt BigInt
 }
