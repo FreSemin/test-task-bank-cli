@@ -77,7 +77,7 @@ export class ClientService {
       if (client) {
         logInfo([client]);
       } else {
-        throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.bank, PROPERTIES.id, clientId));
+        throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.client, PROPERTIES.id, clientId));
       }
     }
   }
