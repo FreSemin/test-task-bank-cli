@@ -92,22 +92,22 @@ export class BankService {
     const [operation, ...operationArguments] = lineArguments;
 
     switch (operation) {
-      case commands.bank.availableOperations.info.name: {
+      case this.#bankAvailableOperations.info.name: {
         await this.#onGetInfo(operationArguments[0]);
         break;
       }
 
-      case commands.bank.availableOperations.reg.name: {
+      case this.#bankAvailableOperations.reg.name: {
         await this.#onReg(operationArguments);
         break;
       }
 
-      case commands.bank.availableOperations.update.name: {
+      case this.#bankAvailableOperations.update.name: {
         await this.#onUpdate(operationArguments);
         break;
       }
 
-      case commands.bank.availableOperations.delete.name: {
+      case this.#bankAvailableOperations.delete.name: {
         await this.#onDelete(operationArguments);
         break;
       }
