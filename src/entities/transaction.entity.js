@@ -13,4 +13,36 @@ export class TransactionEntity {
       data: newTransaction
     });
   }
+
+
+  async findManyByClientId(clientId, from, to) {
+    return await this.#prismaClient.transaction.findMany({
+      where: {
+        OR: [
+          {
+            from: {
+              clientId: clientId,
+            },
+            createdAt: {
+              gte: from,
+              lte: to,
+            },
+          },
+          {
+            to: {
+              clientId: clientId,
+            },
+            createdAt: {
+              gte: from,
+              lte: to,
+            },
+          },
+        ],
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+  }
 }

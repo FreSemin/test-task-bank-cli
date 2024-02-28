@@ -137,6 +137,15 @@ export const commands = {
             example: 'transaction new <from_account_id> <to_account_id> <amount>',
           }
         }
+      },
+      history: {
+        name: 'history',
+        description: 'Log transactions history for account by period',
+        data: {
+          name: 'data',
+          description: 'Log transactions history for account by period (Period format type: YYYY-MM-DDTHH:mm)',
+          example: 'transaction history <client_id> <date_from> <date_to>',
+        }
       }
     }
   },

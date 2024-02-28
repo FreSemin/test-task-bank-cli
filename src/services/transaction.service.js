@@ -7,7 +7,7 @@ import {
   NOT_VALID_NUMBER,
   PROPERTIES,
 } from '../constants/index.js';
-import { AccountEntity, TransactionEntity } from '../entities/index.js';
+import { AccountEntity, ClientEntity, TransactionEntity } from '../entities/index.js';
 import { commands } from '../models/index.js';
 import { logInfo, validateNumber } from '../utils/index.js';
 
@@ -17,12 +17,16 @@ export class TransactionService {
   #transactionEntity = null;
   #accountEntity = null;
 
+  #clientEntity = null;
+
   constructor() {
     this.#transactionAvailableOperations = commands.transaction.availableOperations;
 
     this.#transactionEntity = new TransactionEntity();
 
     this.#accountEntity = new AccountEntity();
+
+    this.#clientEntity = new ClientEntity();
   }
 
   async #onNew(operationArguments) {
@@ -76,12 +80,46 @@ export class TransactionService {
     logInfo([transaction]);
   }
 
+  async #onHistory(operationArguments) {
+    const clientId = validateNumber(operationArguments[0], PROPERTIES.id);
+
+    const existingClient = await this.#clientEntity.findOneBy(PROPERTIES.id, clientId);
+
+    if (!existingClient) {
+      throw new Error(ENTITY_WITH_PROPERTY_NOT_EXISTS(ENTITIES.client, PROPERTIES.id, clientId));
+    }
+
+    // TODO: create validations for time
+    const parsedFromDate = new Date(operationArguments[1]).getTime();
+    const parsedToDate = new Date(operationArguments[2]).getTime();
+
+    let transactionsHistory = await this.#transactionEntity.findManyByClientId(clientId, parsedFromDate, parsedToDate);
+
+
+    // TODO: parse data to readable format
+    // TODO: move logic to utils
+    transactionsHistory = transactionsHistory.map((transaction) => {
+      const { createdAt, ...transactionData } = transaction;
+      return {
+        ...transactionData,
+        createdAt: new Date(Number(createdAt))
+      };
+    });
+
+    logInfo(transactionsHistory);
+  }
+
   async handleOperation(lineArguments) {
     const [operation, ...operationArguments] = lineArguments;
 
     switch (operation) {
       case this.#transactionAvailableOperations.new.name: {
         await this.#onNew(operationArguments);
+        break;
+      }
+
+      case this.#transactionAvailableOperations.history.name: {
+        await this.#onHistory(operationArguments);
         break;
       }
 
