@@ -76,6 +76,17 @@ export const commands = {
           }
         }
       },
+      reg: {
+        name: 'reg',
+        description: 'Registering new client in application',
+        arguments: {
+          entityData: {
+            name: 'entity data',
+            description: 'Register new client in application! (Type can be INDIVIDUAL or LEGAL_ENTITY)',
+            example: 'client bank new <client_name> <client_type>',
+          }
+        }
+      },
     }
   },
   list: {

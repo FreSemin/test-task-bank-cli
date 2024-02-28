@@ -6,7 +6,7 @@ import {
 } from '../constants/index.js';
 import { ClientEntity } from '../entities/index.js';
 import { commands } from '../models/index.js';
-import { logInfo, validateNumber, validateString } from '../utils/index.js';
+import { logInfo, validateClientType, validateNumber, validateString } from '../utils/index.js';
 
 
 export class ClientService {
@@ -18,6 +18,16 @@ export class ClientService {
     this.#clientAvailableOperations = commands.client.availableOperations;
 
     this.#clientEntity = new ClientEntity();
+  }
+
+  async #onReg(operationArguments) {
+    const clientName = validateString(operationArguments[0], PROPERTIES.name);
+
+    const clientType = validateClientType(operationArguments[1]);
+
+    const client = await this.#clientEntity.create({ name: clientName, type: clientType });
+
+    logInfo([client]);
   }
 
   async #onGetInfo(infoArgument) {
@@ -43,6 +53,11 @@ export class ClientService {
     switch (operation) {
       case commands.client.availableOperations.info.name: {
         await this.#onGetInfo(operationArguments[0]);
+        break;
+      }
+
+      case commands.bank.availableOperations.reg.name: {
+        await this.#onReg(operationArguments);
         break;
       }
 
